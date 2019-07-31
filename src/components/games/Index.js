@@ -11,7 +11,7 @@ class GamesIndex extends React.Component {
   }
 
   componentDidMount() {
-    axios.get('https://www.boardgameatlas.com/api/search?order_by=popularity&ascending=false&client_id=SB1VGnDv7M')
+    axios.get('https://www.boardgameatlas.com/api/search?client_id=SB1VGnDv7M')
       .then(res => this.setState({ games: res.data.games }))
   }
 

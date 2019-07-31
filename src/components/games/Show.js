@@ -8,19 +8,46 @@ class GamesShow extends React.Component {
     super()
 
     this.state = {
-      game: {}
+      game: {},
+      categories: {}
     }
-
+    this.setCatigoriesDictionary = this.setCatigoriesDictionary.bind(this)
+    this.getGameCategories = this.getGameCategories.bind(this)
   }
 
   componentDidMount() {
 
-    axios.get(`https://www.boardgameatlas.com/api/search?ids=${this.props.match.params.id}&client_id=SB1VGnDv7M`)
+    axios.get(`https://www.boardgameatlas.com/api/search?client_id=SB1VGnDv7M&ids=${this.props.match.params.id}`)
       .then(res => this.setState({ game: res.data.games[0] }))
+    axios.get('https://www.boardgameatlas.com/api/game/categories?client_id=SB1VGnDv7M')
+      .then(res => this.setState({ categories: this.setCatigoriesDictionary(res.data.categories) }))
+
+  }
+
+  setCatigoriesDictionary(categoriesArray) {
+    const dictionary = {}
+    categoriesArray.forEach(obj => dictionary[obj.id] = obj.name)
+    return dictionary
+  }
+
+  getGameCategories(gameCatigoriesArray){
+    console.log(gameCatigoriesArray)
+    const categoriesList = []
+    gameCatigoriesArray.forEach((obj) => {
+      categoriesList.push(this.state.categories[obj.id])
+    })
+    return (
+      <ul>
+        {categoriesList.map(function(name, index){
+          return <li key={ index }>{name}</li>
+        })}
+      </ul>
+    )
   }
 
   render() {
-    console.log(this.state.game)
+    if(!this.state.game.categories) return 'Loading...'
+    console.log(this.getGameCategories(this.state.game.categories))
     return (
       <section className="section">
         <div className="container">
@@ -52,16 +79,11 @@ class GamesShow extends React.Component {
                 </section>
                 <section className="column">
                   <h1> Categories: </h1>
+                  {this.getGameCategories(this.state.game.categories)}
+
                 </section>
               </div>
-
-
-
-
-
-
             </div>
-
           </div>
           <h1 className="title is-4">Description:</h1>
           <span>{this.state.game.description_preview}</span>
