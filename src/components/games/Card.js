@@ -6,6 +6,7 @@ const Card = ({ name, image }) => {
       <div className="card-header">
         <div className="card-header-title">{name}</div>
       </div>
+      <hr />
       <div className="card-image">
         <figure className="image">
           <img src={image} alt={name} />

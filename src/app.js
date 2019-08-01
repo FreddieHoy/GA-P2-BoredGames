@@ -8,6 +8,7 @@ import Home from './components/pages/Home'
 import Navbar from './components/common/Navbar'
 
 import 'bulma'
+import './style.scss'
 
 class App extends React.Component {
   render() {

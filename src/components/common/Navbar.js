@@ -26,10 +26,10 @@ class Navbar extends React.Component {
   render() {
     console.log(this.props)
     return (
-      <nav className="navbar">
+      <nav className="navbar is-dark">
         <div className="container">
           <div className="navbar-brand">
-            <Link to="/"  className="navbar-item">💩</Link>
+            <Link to="/"  className="navbar-item">🏠 Home</Link>
 
             <a
               role="button"
@@ -43,7 +43,7 @@ class Navbar extends React.Component {
 
           <div className={`navbar-menu ${this.state.navbarOpen ? 'is-active' : ''}`}>
             <div className="navbar-start">
-              <Link to="/games" className="navbar-item">All Games</Link>
+              <Link to="/games" className="navbar-item">🎲 All Games</Link>
             </div>
           </div>
         </div>

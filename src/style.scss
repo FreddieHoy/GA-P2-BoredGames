@@ -1,0 +1,25 @@
+@import url('https://fonts.googleapis.com/css?family=Raleway&display=swap');
+
+.categoriesList:nth-child(1n+11) {
+  display: none;
+}
+$family-primary: 'Raleway';
+$box-shadow: none;
+
+img {
+  padding: 10px;
+}
+
+body {
+  margin: 0;
+  background-image: url('https://i.imgur.com/Nbi7bYI.jpg');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
+}
+.filterside {
+  background-color: rgba(255, 255, 255, 0.5);
+}
+
+@import '~bulma'
