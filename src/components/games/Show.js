@@ -9,7 +9,8 @@ class GamesShow extends React.Component {
 
     this.state = {
       game: {},
-      categories: {}
+      categories: {},
+      mechanics: {}
     }
     this.setCatigoriesDictionary = this.setCatigoriesDictionary.bind(this)
     this.getGameCategories = this.getGameCategories.bind(this)
@@ -21,6 +22,8 @@ class GamesShow extends React.Component {
       .then(res => this.setState({ game: res.data.games[0] }))
     axios.get('https://www.boardgameatlas.com/api/game/categories?client_id=SB1VGnDv7M')
       .then(res => this.setState({ categories: this.setCatigoriesDictionary(res.data.categories) }))
+    axios.get('https://www.boardgameatlas.com/api/game/mechanics?client_id=SB1VGnDv7M')
+      .then(res => this.setState({ mechanics: this.setMechanicsDictionary(res.data.mechanics) }))
 
   }
 
@@ -29,9 +32,13 @@ class GamesShow extends React.Component {
     categoriesArray.forEach(obj => dictionary[obj.id] = obj.name)
     return dictionary
   }
+  setMechanicsDictionary(mechanicsArray) {
+    const dictionary = {}
+    mechanicsArray.forEach(obj => dictionary[obj.id] = obj.name)
+    return dictionary
+  }
 
   getGameCategories(gameCatigoriesArray){
-    console.log(gameCatigoriesArray)
     const categoriesList = []
     gameCatigoriesArray.forEach((obj) => {
       categoriesList.push(this.state.categories[obj.id])
@@ -39,6 +46,19 @@ class GamesShow extends React.Component {
     return (
       <ul>
         {categoriesList.map(function(name, index){
+          return <li key={ index }>{name}</li>
+        })}
+      </ul>
+    )
+  }
+  getGameMechanics(gameMechanicsArray){
+    const mechanicsList = []
+    gameMechanicsArray.forEach((obj) => {
+      mechanicsList.push(this.state.mechanics[obj.id])
+    })
+    return (
+      <ul>
+        {mechanicsList.map(function(name, index){
           return <li key={ index }>{name}</li>
         })}
       </ul>
@@ -71,20 +91,22 @@ class GamesShow extends React.Component {
               <h1>Year Published: {this.state.game.year_published}</h1>
               <h1>Weight: {this.state.game.weight_amount}lbs</h1>
               <h1>Size: {this.state.game.size_height}x{this.state.game.size_width}x{this.state.game.size_depth} Inches</h1>
-              <div className="columns">
-                <section className="column">
-                  <h1> Mechanics:</h1>
-
-
-                </section>
-                <section className="column">
-                  <h1> Categories: </h1>
-                  {this.getGameCategories(this.state.game.categories)}
-
-                </section>
+              <hr />
+              <div className='container'>
+                <div className="columns">
+                  <section className="column">
+                    <h1 className='subtitle is-5'> Mechanics:</h1>
+                    {this.getGameMechanics(this.state.game.mechanics)}
+                  </section>
+                  <section className="column">
+                    <h1 className='subtitle is-5'> Categories: </h1>
+                    {this.getGameCategories(this.state.game.categories)}
+                  </section>
+                </div>
               </div>
             </div>
           </div>
+          <hr />
           <h1 className="title is-4">Description:</h1>
           <span>{this.state.game.description_preview}</span>
 
