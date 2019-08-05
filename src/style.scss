@@ -1,13 +1,37 @@
 @import url('https://fonts.googleapis.com/css?family=Raleway&display=swap');
 
-.categoriesList:nth-child(1n+11) {
-  display: none;
-}
 $family-primary: 'Raleway';
-$box-shadow: none;
+$section-padding: 20px 20px;
+$gap: 10px;
+@import '~bulma';
 
 img {
   padding: 10px;
+}
+.columns {
+  padding: 20px;
+}
+.showImage {
+  width: 200px;
+}
+.hideMechanics {
+  height: 195px;
+  overflow: hidden;
+  transition: all 0.5s ease-in-out;
+}
+.hideCategories {
+  height: 195px;
+  overflow: hidden;
+  transition: all 0.5s ease-in-out;
+}
+.showCategories {
+  height: auto;
+}
+.showMechanics {
+  height: auto;
+}
+div {
+  transition: height 0.5s ease-in-out;
 }
 
 body {
@@ -21,5 +45,19 @@ body {
 .filterside {
   background-color: rgba(255, 255, 255, 0.5);
 }
-
-@import '~bulma'
+p.pageEnd {
+  margin: 200px auto;
+}
+.searchfield {
+  padding: 10px auto;
+  margin: -40px 0;
+}
+.searchResults {
+  padding: 0 20px;
+}
+.makeTextBold {
+  font-weight: bold;
+}
+.makeBorder {
+  border: 2px solid grey;
+}

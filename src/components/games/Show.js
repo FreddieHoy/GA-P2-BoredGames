@@ -20,9 +20,9 @@ class GamesShow extends React.Component {
   componentDidMount() {
 
     Promise.props({
-      game: axios.get(`https://www.boardgameatlas.com/api/search?client_id=SB1VGnDv7M&ids=${this.props.match.params.id}`).then(res => res.data.games[0]),
-      categories: axios.get('https://www.boardgameatlas.com/api/game/categories?client_id=SB1VGnDv7M').then(res => res.data.categories),
-      mechanics: axios.get('https://www.boardgameatlas.com/api/game/mechanics?client_id=SB1VGnDv7M').then(res => res.data.mechanics)
+      game: axios.get(`https://www.boardgameatlas.com/api/search?client_id=${process.env.BOARD_GAMES_ATLAS}&ids=${this.props.match.params.id}`).then(res => res.data.games[0]),
+      categories: axios.get(`https://www.boardgameatlas.com/api/game/categories?client_id=${process.env.BOARD_GAMES_ATLAS}`).then(res => res.data.categories),
+      mechanics: axios.get(`https://www.boardgameatlas.com/api/game/mechanics?client_id=${process.env.BOARD_GAMES_ATLAS}`).then(res => res.data.mechanics)
     })
       .then(res => {
         const { game, categories, mechanics } = res
@@ -79,45 +79,53 @@ class GamesShow extends React.Component {
           <h1 className="title is-2">{this.state.game.name}</h1>
           <hr />
           <div className="columns">
-            <div className="column">
+            <div className="column is-one-thirds">
               <figure className="image">
-                <img src={this.state.game.image_url} alt={this.state.game.name} />
+                <img className="showImage" src={this.state.game.image_url} alt={this.state.game.name} />
               </figure>
+              <div className="section makeBorder filterside">
+                <h1 className="subtitle makeTextBold is-6 has-text-black">Price: ${this.state.game.price} $<strike>{this.state.game.msrp}</strike></h1>
+                <h1 className="subtitle makeTextBold is-6 has-text-black">Discount: {Math.round(this.state.game.discount * 100)}%</h1>
+              </div>
             </div>
-            <div className="column">
+
+            <div className="column section is-one-thirds filterside">
               <h1 className="title is-3">Details:</h1>
+              <h1>Average rating: {Math.round(this.state.game.average_user_rating * 100)/100}</h1>
+              <h1>Number of ratings: {this.state.game.num_user_ratings}</h1>
+              <br />
               <h1>No. Players: {this.state.game.min_players}-{this.state.game.max_players}</h1>
               <h1>Play Time: {this.state.game.min_playtime}-{this.state.game.max_playtime}</h1>
               <h1>Age: {this.state.game.min_age}-100</h1>
-              <h1>Price: ${this.state.game.price} $<strike>{this.state.game.msrp}</strike></h1>
-              <h1>Discount: {Math.round(this.state.game.discount * 100)}%</h1>
               <h1>Designer: {this.state.game.designers}</h1>
               <h1>Publishers: {this.state.game.primary_publisher}</h1>
               <h1>Year Published: {this.state.game.year_published}</h1>
               <h1>Weight: {this.state.game.weight_amount}lbs</h1>
-              <h1>Average rating: {Math.round(this.state.game.average_user_rating * 100)/100}</h1>
-              <h1>Number of ratings: {this.state.game.num_user_ratings}</h1>
               <h1>Size: {this.state.game.size_height}x{this.state.game.size_width}x{this.state.game.size_depth} Inches</h1>
+              <br />
+
               <hr />
               <div className='container'>
                 <div className="columns">
-                  <section className="column">
-                    <h1 className='subtitle is-5'> Mechanics:</h1>
+                  <section className="column is-third">
+                    <h1 className='subtitle has-text-black is-5'> Mechanics:</h1>
                     {this.getGameMechanics(this.state.game.mechanics)}
                   </section>
                   <section className="column">
-                    <h1 className='subtitle is-5'> Categories: </h1>
+                    <h1 className='subtitle has-text-black is-5'> Categories: </h1>
                     {this.getGameCategories(this.state.game.categories)}
-
                   </section>
                 </div>
               </div>
             </div>
+
+            <div className="column is-one-thirds section filterside">
+              <h1 className="title is-4">Description:</h1>
+              <span>{this.state.game.description_preview}</span>
+            </div>
           </div>
           <hr />
-          <h1 className="title is-4">Description:</h1>
-          <span>{this.state.game.description_preview}</span>
-
+          <p className=" subtitle has-text-black is-2 level-item"> Made by Lana & Fred 😁</p>
         </div>
       </section>
     )

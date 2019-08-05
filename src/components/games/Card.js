@@ -2,11 +2,10 @@ import React from 'react'
 
 const Card = ({ name, image }) => {
   return (
-    <div className="card">
+    <div className="card filterside">
       <div className="card-header">
         <div className="card-header-title">{name}</div>
       </div>
-      <hr />
       <div className="card-image">
         <figure className="image">
           <img src={image} alt={name} />

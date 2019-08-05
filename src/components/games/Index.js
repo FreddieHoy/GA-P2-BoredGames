@@ -21,7 +21,9 @@ class GamesIndex extends React.Component {
       searchDiscount: '',
       searchAges: '',
       searchRating: '',
-      sortPrice: ''
+      sortPrice: '',
+      mechanicsOpen: false,
+      categoriesOpen: false
 
 
     }
@@ -37,6 +39,16 @@ class GamesIndex extends React.Component {
     this.handleChangeYearMade = this.handleChangeYearMade.bind(this)
     this.handleChangeCategory = this.handleChangeCategory.bind(this)
     this.handleChangeMechanics = this.handleChangeMechanics.bind(this)
+    this.toggleCategories = this.toggleCategories.bind(this)
+    this.toggleMechanics = this.toggleMechanics.bind(this)
+
+  }
+
+  toggleMechanics() {
+    this.setState({ mechanicsOpen: !this.state.mechanicsOpen})
+  }
+  toggleCategories() {
+    this.setState({ categoriesOpen: !this.state.categoriesOpen})
   }
 
   componentDidMount() {
@@ -129,9 +141,10 @@ class GamesIndex extends React.Component {
 
   handleChangeCategory(e) {
     this.setState({
-      sortCategories: e.target.value,
-      boxCheckedCategories: e.target.checked
+      sortCategorie: e.target.value,
+      boxCheckedCategorie: e.target.checked
     })
+    console.log('its trying')
   }
 
   filterGames() {
@@ -191,13 +204,17 @@ class GamesIndex extends React.Component {
       filterGamesByYearMade = filterGamesByMaxTime.filter(game => game.year_published >= Number(this.state.sortYearMade) && game.year_published < Number(this.state.sortYearMade) + 4)
     } else filterGamesByYearMade = filterGamesByMaxTime
 
+    let filterGamesByCategories
+    if (this.state.boxCheckedCategorie) {
+      const idOfCategoryValue = Object.entries(this.state.categories).find(entry => entry[1] === this.state.sortCategorie)[0]
+      filterGamesByCategories = filterGamesByYearMade.filter(game => game.categories.some(category => category.id === idOfCategoryValue))
+    }else filterGamesByCategories = filterGamesByYearMade
+
     let filterGamesByMechanics
     if (this.state.boxCheckedMechanics) {
-      filterGamesByMechanics = filterGamesByYearMade.filter(game => {
-        game.mechanics.map(obj => obj.id )
-      })
-      console.log(filterGamesByMechanics)
-    }else filterGamesByMechanics = filterGamesByYearMade
+      const idOfMechanicsValue = Object.entries(this.state.mechanics).find(entry => entry[1] === this.state.sortMechanics)[0]
+      filterGamesByMechanics = filterGamesByCategories.filter(game => game.mechanics.some(category => category.id === idOfMechanicsValue))
+    }else filterGamesByMechanics = filterGamesByCategories
 
     // Takes tfilterGamesByPrice. Looks at serch and filterbar. Returns sortedGames.
     const re = new RegExp(this.state.searchTerm, 'i')
@@ -212,11 +229,11 @@ class GamesIndex extends React.Component {
 
   getFilterItemsMechanics(dictionary){
     return (
-      <ul >
-        {Object.values(dictionary).map(function(name, index){
+      <ul className="showMechanics">
+        {Object.values(dictionary).map((name, index) => {
           return (
             <li  className='is-checkradio'  key={ index }>
-              <input value={name} type="checkbox" id="mech" name="mech"  />
+              <input onClick={this.handleChangeMechanics} value={name} type="checkbox" id="mech" name="mech"  />
               <label className="title is-6"> {name}</label>
             </li>
           )
@@ -227,15 +244,16 @@ class GamesIndex extends React.Component {
 
   getFilterItemsCategories(dictionary){
     return (
-      <ul >
-        {Object.values(dictionary).map(function(name, index){
+      <ul className="showCategories">
+        {Object.values(dictionary).map((name, index) => {
           return (
             <li  className='is-checkradio'  key={ index }>
-              <input value={name}type="checkbox" id="cat" name="cat"  />
+              <input onClick={this.handleChangeCategory} value={name} type="checkbox" id="cat" name="cat"  />
               <label className="title is-6"> {name}</label>
             </li>
           )
         })}
+
       </ul>
     )
   }
@@ -250,19 +268,19 @@ class GamesIndex extends React.Component {
     console.log()
     return (
       <section className="section">
-        <div className="container">
+        <div className="container ">
           <h2 className="subtitle is-2">All Bored Games</h2>
           <div className="columns">
 
-            <div className="column is-one-quarter filterside">
+            <div className="column filterside">
               <h2 className="subtitle is-3">Filters</h2>
               <h1 className="subtitle is-4">Games found: {this.filterGames().length}</h1>
               <hr />
-              <div>
+              <div className="section searchResults">
                 <h2 className="subtitle is-4">Price</h2>
                 <ul>
                   <li>
-                    <input onClick={this.handleChangePrice} value="0" type="radio" id="scales" name="price" />
+                    <input onClick={this.handleChangePrice} value="0" type="radio" id="scales" name="price" checked/>
                     <label className="title is-6"> All</label>
                   </li>
                   <li>
@@ -288,11 +306,11 @@ class GamesIndex extends React.Component {
                 </ul>
               </div>
               <hr />
-              <div>
+              <div className="section searchResults">
                 <h2 className="subtitle is-4">Discount</h2>
                 <ul>
                   <li>
-                    <input onClick={this.handleChangeDiscount} value="0" type="radio" id="discount" name="discount"  />
+                    <input onClick={this.handleChangeDiscount} value="0" type="radio" id="discount" name="discount" checked />
                     <label className="title is-6"> All</label>
                   </li>
                   <li>
@@ -318,11 +336,11 @@ class GamesIndex extends React.Component {
                 </ul>
               </div>
               <hr />
-              <div>
+              <div className="section searchResults">
                 <h2 className="subtitle is-4">Rating</h2>
                 <ul>
                   <li>
-                    <input onClick={this.handleChangeRating} value="0" type="radio" id="rating" name="rating"  />
+                    <input onClick={this.handleChangeRating} value="0" type="radio" id="rating" name="rating"  checked/>
                     <label className="title is-6"> All</label>
                   </li>
                   <li>
@@ -344,11 +362,11 @@ class GamesIndex extends React.Component {
                 </ul>
               </div>
               <hr />
-              <div>
+              <div className="section searchResults">
                 <h2 className="subtitle is-4">Minimum Players</h2>
                 <ul>
                   <li>
-                    <input onClick={this.handleChangeMinPlayers} value="0" type="radio" id="players" name="players"  />
+                    <input onClick={this.handleChangeMinPlayers} value="0" type="radio" id="players" name="players" checked />
                     <label className="title is-6"> All</label>
                   </li>
                   <li>
@@ -378,11 +396,11 @@ class GamesIndex extends React.Component {
                 </ul>
               </div>
               <hr />
-              <div>
+              <div className="section searchResults">
                 <h2 className="subtitle is-4">Play Time (Minutes)</h2>
                 <ul>
                   <li>
-                    <input onClick={this.handleChangeMaxTime} value="0" type="radio" id="playTime" name="playTime"  />
+                    <input onClick={this.handleChangeMaxTime} value="0" type="radio" id="playTime" name="playTime"  checked/>
                     <label className="title is-6"> All</label>
                   </li>
                   <li>
@@ -416,7 +434,7 @@ class GamesIndex extends React.Component {
                 </ul>
               </div>
               <hr />
-              <div>
+              <div className="section searchResults">
                 <h2 className="subtitle is-4">Year Published</h2>
                 <ul>
                   <li>
@@ -449,30 +467,32 @@ class GamesIndex extends React.Component {
                   </li>
                 </ul>
               </div>
-              <hr />
-              <div>
-                <h2 className="subtitle is-4">Mechanics</h2>
-
-                {this.getFilterItemsMechanics(this.state.mechanics)}
-
-              </div>
-              <hr />
-              <div>
-                <h2 className="subtitle is-4">Categories</h2>
-
-                {this.getFilterItemsCategories(this.state.categories)}
-
+              <div className="section searchResults">
+                <hr />
+                <div className={` ${this.state.mechanicsOpen ? 'showMechanics' : 'hideMechanics'}`}>
+                  <h2 className="subtitle is-4">Mechanics</h2>
+                  {this.getFilterItemsMechanics(this.state.mechanics)}
+                </div>
+                <br />
+                <button className="button is-dark" onClick={this.toggleMechanics} >show or hide</button>
+                <hr />
+                <div className={` ${this.state.categoriesOpen ? 'showCategories' : 'hideCategories'}`}>
+                  <h2 className="subtitle is-4">Categories</h2>
+                  {this.getFilterItemsCategories(this.state.categories)}
+                </div>
+                <br />
+                <button className="button is-dark" onClick={this.toggleCategories} >show or hide</button>
+                <hr />
               </div>
             </div>
-
-            <div className="container">
-              <div className="container is-three-quarters">
-                <div className="column">
+            <div className="container column is-four-fifths">
+              <div className="searchfield columns is-multiline">
+                <div className="container column is-half">
                   <div className="field">
                     <input placeholder="search" className="input" onKeyUp={this.handleKeyUp}/>
                   </div>
                 </div>
-                <div className="column">
+                <div className="column is-half">
                   <div className="field">
                     <div className="select is-fullwidth">
                       <select onChange={this.handleChange}>
@@ -484,23 +504,27 @@ class GamesIndex extends React.Component {
                     </div>
                   </div>
                 </div>
-                <div className="section">
-                  <div className="columns is-multiline">
-                    {this.filterGames().map(game =>
-                      <div
-                        key={game.id}
-                        className="column is-half-tablet is-one-quarter-desktop"
-                      >
-                        <Link to={`/games/${game.id}`}>
-                          <Card name={game.name} image={game.image_url} />
-                        </Link>
-                      </div>
-                    )}
-                  </div>
+              </div>
+              <div className="searchResults section">
+                <div className=" searchResults columns is-multiline">
+                  {this.filterGames().map(game =>
+                    <div
+                      key={game.id}
+                      className="column is-half-tablet is-one-quarter-desktop"
+                    >
+                      <Link to={`/games/${game.id}`}>
+                        <Card name={game.name} image={game.image_url} />
+                      </Link>
+                    </div>
+                  )}
                 </div>
               </div>
             </div>
           </div>
+        </div>
+        <div>
+          <hr />
+          <p className=" subtitle has-text-black is-2 level-item"> Made by Lana & Fred 😁</p>
         </div>
       </section>
     )
