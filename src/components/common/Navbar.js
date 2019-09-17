@@ -24,7 +24,6 @@ class Navbar extends React.Component {
   }
 
   render() {
-    console.log(this.props)
     return (
       <nav className="navbar is-dark">
         <div className="container">
