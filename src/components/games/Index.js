@@ -54,9 +54,9 @@ class GamesIndex extends React.Component {
   componentDidMount() {
 
     Promise.props({
-      games: axios.get('https://www.boardgameatlas.com/api/search?client_id=SB1VGnDv7M').then(res => res.data.games),
-      categories: axios.get('https://www.boardgameatlas.com/api/game/categories?client_id=SB1VGnDv7M').then(res => res.data.categories),
-      mechanics: axios.get('https://www.boardgameatlas.com/api/game/mechanics?client_id=SB1VGnDv7M').then(res => res.data.mechanics)
+      games: axios.get(`https://www.boardgameatlas.com/api/search?client_id=${process.env.BOARD_GAMES_ATLAS}`).then(res => res.data.games),
+      categories: axios.get(`https://www.boardgameatlas.com/api/game/categories?client_id=${process.env.BOARD_GAMES_ATLAS}`).then(res => res.data.categories),
+      mechanics: axios.get(`https://www.boardgameatlas.com/api/game/mechanics?client_id=${process.env.BOARD_GAMES_ATLAS}`).then(res => res.data.mechanics)
     })
       .then(res => {
         const { games, categories, mechanics } = res
