@@ -1,6 +1,6 @@
 # Project 2: Bored Games
 
-The site: [Bored Games](https://freddiehoy.github.io/project-02/)
+The site: [Bored Games](https://freddiehoy.github.io/project-2/)
 
 ## Collaborator
 
