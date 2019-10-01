@@ -1,6 +1,6 @@
 # Project 2: Bored Games
 
-The site: [Bored Games](https://freddiehoy.github.io/project-2/)
+The site: [Bored Games](https://freddiehoy.github.io/GA-P2-BoredGames/#/)
 
 ## Collaborator
 
@@ -12,12 +12,12 @@ This project helps 'bored' users to find a board game that is right for them. Th
 
 This is my 2nd coding project on the 3 month, General Assembly software engineering immersive course.
 
-The project was completed as a 48hr paircoded hackathon. The project was focused on consuming an API and using RESTful routes. However, the API only game us 100 games for free. The frontend is made using React and Node.js.
+The project was completed as a 48hr pair coded hackathon. The project was focused on consuming an API and using RESTful routes. However, the API only gave us 100 games for free. The frontend is made using React and Node.js.
 
 ![BoredGames homepage](https://user-images.githubusercontent.com/51379192/65143270-7215ba00-da0c-11e9-92da-56927dad77b4.png)
 
 
-# Brief
+## Brief
 
 * **Consume a public API** – this could be anything but it must make sense for your project.
 * **Have several components** - At least one classical and one functional.
@@ -40,7 +40,7 @@ The project was completed as a 48hr paircoded hackathon. The project was focused
 * GitHub
 * gh-pages
 
-### All Features
+## All Features
 
 * Home page
 * Board game index page
@@ -49,8 +49,20 @@ The project was completed as a 48hr paircoded hackathon. The project was focused
 * Search by Mechanics & categories. Using drop down list.
 * Detail page for each board game.
 
-## Site display
 
+## Approach Taken
+
+We decided to use Board Game Atlas API after reading some of its documentation and interacting with it using Insomnia.
+
+We quickly discovered that the API was very east to use and the data received back was had a lot of very useful information. The only draw back was that the API only provided us with 100 games from its library of a few thousand.
+
+We then set up the React app. Getting data using axios requests and an API key, we formed a basic Index page. Followed by a detail show page and a home page.
+
+A large majority of our work went to extensive filtering and sorting. As the API gave such rich data for each game it enable the site to provide a very useful search for the Ideal board game.
+
+Learning for the first time to use dotenv files we hid the API key.
+
+# Site Visuals
 
 ![Index page](https://user-images.githubusercontent.com/51379192/65154173-ee1afc80-da22-11e9-9a7b-ef04b6355044.png)
 
@@ -60,19 +72,9 @@ The project was completed as a 48hr paircoded hackathon. The project was focused
 ### List dropdown
 ![dopdown](https://user-images.githubusercontent.com/51379192/65155910-02142d80-da26-11e9-9bea-d64b4b883f8f.gif)
 
-
-## ProjectLog
-
-| Time      | Task         |
-| ------------- |:-------------:|
-| **1st day - Half**    | Project Ideas, API search, reading API docs, Interaction with Insomnia.  |
-| **2nd day - Whole**     | Get data to display board games, work on filtering and sorting, radio buttons & check boxes.    |
-| **3rd day - Half**  | Display game detail, styling, home page, categories & mechanics dropdown.      |
-
-
 # Challenges
 
-### Sorting and Filtering at Once
+### Sorting and Filtering at the same time.
 
 Getting all the sorting and filtering to work at the same time was the biggest issue. As we were fairly in-experienced in coding at this stage in the course (6 weeks) in hindsight the method we used was not the most elegant, however it did work!
 
@@ -107,14 +109,35 @@ Being a hackathon time constraints are obvious. However it was a good lesson in 
 
 A lesson that carried forward into following projects.
 
-# Moving forward
 
-* I learn't about the effectiveness of pair coding
-* What an API with good documentation is like compared to bad
-* Effective time management in order to reach an MVP
-* More time could of been used on styling
-* The addition of where to buy the boarding game on the detail view would make the site much more useful
-* The limit of only 100 board games from the API has proved to be less useful
+## ProjectLog
+
+| Time      | Task         |
+| ------------- |:-------------:|
+| **1st day - Half**    | Project Ideas, API search, reading API docs, Interaction with Insomnia.  |
+| **2nd day - Whole**     | Get data to display board games, work on filtering and sorting, radio buttons & check boxes.    |
+| **3rd day - Half**  | Display game detail, styling, home page, categories & mechanics dropdown.      |
+
+
+## THE BIG WINS
+
+- First ever consumption of an API was very exciting! Very Happy about learning that.
+- The extensive filtering was great feature, but of course can me refactored.
+- Adding Show & Hide to the two filter properties Mechanics and Categories was some enjoyable and elegant CSS, very cool for a new developer.
+
+## What have I learned.
+- How to consume an API.
+- What an API with good documentation is like compared to bad.
+- The effectiveness of pair coding.
+- Using dotenv file to protect your information.
+- Effective time management in order to reach an MVP.
+
+## Moving forward
+- The addition of where to buy the boarding game on the detail view would make the site much more useful.
+- Additional styling.
+- Use another API to show all the nearest Boardgame cafes.
+
+---
 
 # Contact
 
